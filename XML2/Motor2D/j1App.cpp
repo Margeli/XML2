@@ -152,8 +152,17 @@ void j1App::PrepareUpdate()
 void j1App::FinishUpdate()
 {
 	// TODO 1: This is a good place to call load / Save functions
-
+	if (load) {
+		Real_Load();
+	}
+	if (save) {
+		Real_Save();
+	}
 }
+
+void j1App::Save() { save = true; }// Needed to change again to FALSE
+
+void j1App::Load() { load = true; }// Needed to change again to FALSE
 
 // Call modules before each loop iteration
 bool j1App::PreUpdate()
@@ -262,6 +271,10 @@ const char* j1App::GetOrganization() const
 {
 	return organization.GetString();
 }
+
+const void j1App::Real_Save() {};
+
+const void j1App::Real_Load() {};
 
 
 // TODO 3: Create a simulation of the xml file to read 

@@ -49,7 +49,16 @@ public:
 	// will one execute by the very end of the frame
 	// Load / Save
 
+	const void Load() ;
+	const void Save() ;
+
 private:
+
+	const void Real_Save();
+	const void Real_Load();
+
+	bool save = false;
+	bool load = false;
 
 	// Load config file
 	bool LoadConfig();
