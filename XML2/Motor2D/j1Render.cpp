@@ -90,6 +90,13 @@ bool j1Render::CleanUp()
 // TODO 6: Create a method to load the state
 // for now it will be camera's x and y
 
+void j1Render::Load(pugi::xml_node& renderer) {
+
+	camera.x = renderer.child("camera").attribute("x").as_int();
+	camera.y= renderer.child("camera").attribute("y").as_int();
+
+}
+
 // TODO 8: Create a method to save the state
 // using append_child and append_attribute
 

@@ -154,15 +154,17 @@ void j1App::FinishUpdate()
 	// TODO 1: This is a good place to call load / Save functions
 	if (load) {
 		Real_Load();
+		load = false;
 	}
 	if (save) {
 		Real_Save();
+		save = false;
 	}
 }
 
-void j1App::Save() { save = true; }// Needed to change again to FALSE
+const void j1App::Save() { save = true; }// Needed to change again to FALSE
 
-void j1App::Load() { load = true; }// Needed to change again to FALSE
+const void j1App::Load() { load = true; }// Needed to change again to FALSE
 
 // Call modules before each loop iteration
 bool j1App::PreUpdate()
@@ -272,9 +274,41 @@ const char* j1App::GetOrganization() const
 	return organization.GetString();
 }
 
-const void j1App::Real_Save() {};
+ void j1App::Real_Save() {};
 
-const void j1App::Real_Load() {};
+ void j1App::Real_Load() {
+
+
+	//bool ret = true;
+	p2List_item<j1Module*>* item;	
+	j1Module* pModule = NULL;
+
+	pugi::xml_parse_result result = config_file.load_file("save_file.xml");
+
+	if (result == NULL)
+	{
+		LOG("Could not load save file; pugi error: %s", result.description());
+
+	}
+	else
+	{
+		save_node = config_file.child("save");
+	}
+
+	
+
+	for (item = modules.start; item != NULL /*&& ret == true*/; item = item->next)
+	{
+		pModule = item->data;
+		pModule->Load(savefile.child(pModule->name.GetString()));
+		
+	}
+
+	//return ret;
+
+
+
+};
 
 
 // TODO 3: Create a simulation of the xml file to read 
