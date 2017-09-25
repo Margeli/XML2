@@ -93,12 +93,21 @@ bool j1Render::CleanUp()
 void j1Render::Load(pugi::xml_node& renderer) {
 
 	camera.x = renderer.child("camera").attribute("x").as_int();
-	camera.y= renderer.child("camera").attribute("y").as_int();
+	camera.y = renderer.child("camera").attribute("y").as_int();
 
+	LOG("Loading render");
 }
 
 // TODO 8: Create a method to save the state
 // using append_child and append_attribute
+void j1Render::Save(pugi::xml_node& renderer) {
+
+	renderer.append_child("camera").append_attribute("x").set_value(camera.x);
+	renderer.child("camera").append_attribute("y").set_value(camera.y);
+
+	LOG("Saving render");
+}
+
 
 void j1Render::SetBackgroundColor(SDL_Color color)
 {

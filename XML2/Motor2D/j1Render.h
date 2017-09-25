@@ -29,7 +29,8 @@ public:
 	bool CleanUp();
 
 	void Load(pugi::xml_node&);
-	//void Save(pugi::xml_node&);
+
+	void Save(pugi::xml_node&);
 
 	// Blit
 	void SetViewPort(const SDL_Rect& rect);

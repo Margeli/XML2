@@ -274,7 +274,32 @@ const char* j1App::GetOrganization() const
 	return organization.GetString();
 }
 
- void j1App::Real_Save() {};
+ void j1App::Real_Save() {
+	// Has to create a new temporary xml file to edit, then replace from the original "save_file.xml"
+	 //bool ret = true;
+	 p2List_item<j1Module*>* item;
+	 j1Module* pModule = NULL;
+
+	 pugi::xml_document	tmp_save_document;
+	 pugi::xml_node	tmp_save_node;
+	 
+	//creates the root node "save"
+	 tmp_save_node = tmp_save_document.append_child("save");
+
+
+	 for (item = modules.start; item != NULL /*&& ret == true*/; item = item->next)
+	 {
+		 pModule = item->data;
+		 pModule->Save(tmp_save_node.append_child(pModule->name.GetString()));
+
+	 }
+
+	 tmp_save_document.save_file("save_file.xml");
+
+	 //return ret;
+
+ 
+ };
 
  void j1App::Real_Load() {
 
@@ -283,7 +308,7 @@ const char* j1App::GetOrganization() const
 	p2List_item<j1Module*>* item;	
 	j1Module* pModule = NULL;
 
-	pugi::xml_parse_result result = config_file.load_file("save_file.xml");
+	pugi::xml_parse_result result = savefile.load_file("save_file.xml");
 
 	if (result == NULL)
 	{
@@ -292,7 +317,7 @@ const char* j1App::GetOrganization() const
 	}
 	else
 	{
-		save_node = config_file.child("save");
+		save_node = savefile.child("save");
 	}
 
 	
@@ -300,7 +325,7 @@ const char* j1App::GetOrganization() const
 	for (item = modules.start; item != NULL /*&& ret == true*/; item = item->next)
 	{
 		pModule = item->data;
-		pModule->Load(savefile.child(pModule->name.GetString()));
+		pModule->Load(save_node.child(pModule->name.GetString()));
 		
 	}
 
