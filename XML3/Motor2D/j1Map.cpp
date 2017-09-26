@@ -56,7 +56,7 @@ bool j1Map::Load(const char* file_name)
 	bool ret = true;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
 
-	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
+	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());//map file-> file_name
 
 	if(result == NULL)
 	{
@@ -67,11 +67,8 @@ bool j1Map::Load(const char* file_name)
 	if(ret == true)
 	{
 		// TODO 3: Create and call a private function to load and fill
-		// all your map data
-		map_node = map_file.first_child();
-
-
-
+		// all your map data		
+		Fill_map(map_file);
 	}
 
 	// TODO 4: Create and call a private function to load a tileset
@@ -89,3 +86,17 @@ bool j1Map::Load(const char* file_name)
 	return ret;
 }
 
+void j1Map::Fill_map(pugi::xml_document& doc){
+
+	pugi::xml_node map_node = doc.child("map");
+
+	map_struct.orientation = map_node.attribute("orientation").as_string();
+	map_struct.renderorder = map_node.attribute("renderorder").as_string();
+	map_struct.width = map_node.attribute("width").as_uint();
+	map_struct.height = map_node.attribute("height").as_uint();
+	map_struct.titlewidth = map_node.attribute("tilewidth").as_uint();
+	map_struct.titleheight = map_node.attribute("tileheight").as_uint();
+	map_struct.nextobjectid = map_node.attribute("nextobjectid").as_uint();
+
+
+}

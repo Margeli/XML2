@@ -15,25 +15,25 @@
 // TODO 1: Create a struct needed to hold the information to Map node
 
 struct Map {
-	enum orientation orientation;
-	enum renderorder renderorder;
+	enum Orientation orientation;
+	enum Renderorder renderorder;
 	uint width;
 	uint height;
 	uint titlewidth;
 	uint titleheight;
 	int nextobjectid;
 
-	enum orientation {
-		ORTHOGONAL = 1,
-		ISOMETRIC,
-		ISOMETRIC_STAGGERED,
-		HEXAGONAL_STAGGERED
+	enum Orientation {
+		orthogonal = 1,
+		isometric,
+		staggered,
+		hexagonal
 	};
-	enum renderorder {
-		RIGHTDOWN = 1,
-		RIGHTUP,
-		LEFTDOWN,
-		LEFTUP
+	enum Renderorder {
+		right_down = 1,
+		right_up,
+		left_down,
+		left_up
 
 	};
 };
@@ -72,17 +72,19 @@ public:
 
 private:
 
+	void Fill_map(pugi::xml_document&);
 
 public:
 	
 
 	// TODO 1: Add your struct for map info as public for now
-	
+	Map map_struct;
+	Tileset map_struct_tileset;
 
 private:
 
 	pugi::xml_document	map_file;
-	pugi::xml_node map_node;
+
 	p2SString			folder;
 	bool				map_loaded;
 };
