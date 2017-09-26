@@ -11,7 +11,41 @@
 // ----------------------------------------------------
 
 
+
 // TODO 1: Create a struct needed to hold the information to Map node
+
+struct Map {
+	enum orientation orientation;
+	enum renderorder renderorder;
+	uint width;
+	uint height;
+	uint titlewidth;
+	uint titleheight;
+	int nextobjectid;
+
+	enum orientation {
+		ORTHOGONAL = 1,
+		ISOMETRIC,
+		ISOMETRIC_STAGGERED,
+		HEXAGONAL_STAGGERED
+	};
+	enum renderorder {
+		RIGHTDOWN = 1,
+		RIGHTUP,
+		LEFTDOWN,
+		LEFTUP
+
+	};
+};
+
+struct Tileset {
+	uint firstgid;
+	char* name= nullptr; // need to delete
+	uint tilewidth;
+	uint tileheight;
+	uint spacing;
+	uint margin;
+};
 
 
 // ----------------------------------------------------
@@ -40,12 +74,15 @@ private:
 
 
 public:
+	
 
 	// TODO 1: Add your struct for map info as public for now
+	
 
 private:
 
 	pugi::xml_document	map_file;
+	pugi::xml_node map_node;
 	p2SString			folder;
 	bool				map_loaded;
 };
