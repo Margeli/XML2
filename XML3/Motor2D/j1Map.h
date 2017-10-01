@@ -22,20 +22,21 @@ struct Map {
 	uint titlewidth;
 	uint titleheight;
 	int nextobjectid;
+	
+};
 
-	enum Orientation {
-		orthogonal = 1,
-		isometric,
-		staggered,
-		hexagonal
-	};
-	enum Renderorder {
-		right_down = 1,
-		right_up,
-		left_down,
-		left_up
+enum Orientation {
+	orthogonal = 1,
+	isometric,
+	staggered,
+	hexagonal
+};
+enum Renderorder {
+	right_down = 1,
+	right_up,
+	left_down,
+	left_up
 
-	};
 };
 
 struct Tileset {
@@ -70,13 +71,13 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
-	Orientation String_to_orientation(p2SString str);
+	
 
 private:
 
 	void Fill_map(pugi::xml_document&);
 
-	
+	Orientation String_to_orientation(p2SString str);
 	Renderorder String_to_renderorder(p2SString str);
 
 public:

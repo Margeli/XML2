@@ -90,8 +90,8 @@ void j1Map::Fill_map(pugi::xml_document& doc){
 
 	pugi::xml_node map_node = doc.child("map");
 
-	map_struct.orientation = map_node.attribute("orientation").as_string();
-	map_struct.renderorder = map_node.attribute("renderorder").as_string();
+	map_struct.orientation = String_to_orientation(map_node.attribute("orientation").as_string());
+	map_struct.renderorder = String_to_renderorder(map_node.attribute("renderorder").as_string());
 	map_struct.width = map_node.attribute("width").as_uint();
 	map_struct.height = map_node.attribute("height").as_uint();
 	map_struct.titlewidth = map_node.attribute("tilewidth").as_uint();
@@ -100,13 +100,45 @@ void j1Map::Fill_map(pugi::xml_document& doc){
 
 
 }
-/*
+
 Orientation j1Map::String_to_orientation(p2SString str){
 
 	if (str == "orthogonal") {
 	
 		return orthogonal;
 	}
-
+	if (str == "isometric") {
 	
-}*/
+		return isometric;
+	}
+	if (str == "staggered") {
+
+		return staggered;
+	}
+	if (str == "hexagonal") {
+
+		return hexagonal;
+	}
+}
+
+
+
+Renderorder j1Map::String_to_renderorder(p2SString str) {
+
+	if (str == "right-down") {
+
+		return right_down;
+	}
+	if (str == "right-up") {
+
+		return right_up;
+	}
+	if (str == "left-down") {
+
+		return left_down;
+	}
+	if (str == "left-up") {
+
+		return left_up;
+	}
+}
