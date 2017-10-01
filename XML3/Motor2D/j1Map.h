@@ -70,9 +70,14 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
+	Orientation String_to_orientation(p2SString str);
+
 private:
 
 	void Fill_map(pugi::xml_document&);
+
+	
+	Renderorder String_to_renderorder(p2SString str);
 
 public:
 	

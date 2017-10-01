@@ -100,3 +100,13 @@ void j1Map::Fill_map(pugi::xml_document& doc){
 
 
 }
+/*
+Orientation j1Map::String_to_orientation(p2SString str){
+
+	if (str == "orthogonal") {
+	
+		return orthogonal;
+	}
+
+	
+}*/
