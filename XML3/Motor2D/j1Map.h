@@ -14,16 +14,7 @@
 
 // TODO 1: Create a struct needed to hold the information to Map node
 
-struct Map {
-	enum Orientation orientation;
-	enum Renderorder renderorder;
-	uint width;
-	uint height;
-	uint titlewidth;
-	uint titleheight;
-	int nextobjectid;
-	
-};
+
 
 enum Orientation {
 	orthogonal = 1,
@@ -41,13 +32,27 @@ enum Renderorder {
 
 struct Tileset {
 	uint firstgid;
-	char* name= nullptr; // need to delete
+	p2SString img_source;
+	p2SString name;
 	uint tilewidth;
 	uint tileheight;
 	uint spacing;
 	uint margin;
 };
 
+struct Map {
+	enum Orientation orientation;
+	enum Renderorder renderorder;
+	uint width;
+	uint height;
+	uint tilewidth;
+	uint tileheight;
+	int nextobjectid;
+	uint tileset_num=0;
+
+	
+	
+};
 
 // ----------------------------------------------------
 class j1Map : public j1Module
@@ -77,6 +82,10 @@ private:
 
 	void Fill_map(pugi::xml_document&);
 
+	void Fill_tileset(pugi::xml_document& doc);
+
+	void LOG_all(pugi::xml_document& doc);
+
 	Orientation String_to_orientation(p2SString str);
 	Renderorder String_to_renderorder(p2SString str);
 
@@ -93,6 +102,7 @@ private:
 
 	p2SString			folder;
 	bool				map_loaded;
+	p2List<SDL_Texture*>	Map_texture;
 };
 
 #endif // __j1MAP_H__
