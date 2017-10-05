@@ -134,7 +134,9 @@ bool j1Map::Load(const char* file_name)
 
 	// TODO 4: Iterate all layers and load each of them
 	// Load layer info ----------------------------------------------
-
+	if (ret == true) {
+		ret = LoadLayer(layers);
+	}
 
 	if(ret == true)
 	{
@@ -300,23 +302,34 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 }
 
 // TODO 3: Create the definition for a function that loads a single layer
-bool j1Map::LoadLayer(pugi::xml_node& node, Layer* layer){
+bool j1Map::LoadLayer( Layer* layer){
 
-	layer->name = node.attribute("name").as_string();
-	layer->height = node.attribute("height").as_uint();
-	layer->width = node.attribute("width").as_uint();
+	bool ret = true;
 
-	uint data_size = layer->width * layer->height;
-	layer->data=new uint[data_size];
+	pugi::xml_node& node = map_file.child("map").child("layer");
+	
+	if (node == NULL)
+		{
+			LOG("Error parsing map xml file: Cannot find 'node' tag.");
+			ret = false;
+		}
+	else {
+		layer->name = node.attribute("name").as_string();
+		layer->height = node.attribute("height").as_uint();
+		layer->width = node.attribute("width").as_uint();
 
-	memset(&data, 0, sizeof(uint)*data_size);
-	uint i= 0;
-	for (pugi::xml_node tile = node.child("data").child("tile"); tile; tile = tile.next_sibling("tile")) {
-		
-		layer->data[i++] = tile.attribute("gid").as_uint();
-		
+		uint data_size = layer->width * layer->height;
+		layer->data = new uint[data_size];
+
+		memset(&data, 0, sizeof(uint)*data_size);
+		uint i = 0;
+		for (pugi::xml_node tile = node.child("data").child("tile"); tile; tile = tile.next_sibling("tile")) {
+
+			layer->data[i++] = tile.attribute("gid").as_uint();
+
+		}
 	}
-
+	return ret;
 }
 
 Layer::~Layer(){
