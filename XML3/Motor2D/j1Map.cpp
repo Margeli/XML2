@@ -83,6 +83,7 @@ bool j1Map::Load(const char* file_name)
 	// TODO 4: Create and call a private function to load a tileset
 	// remember to support more any number of tilesets!
 	Fill_tileset(map_file);
+	Fill_layers(map_file);
 
 	if(ret == true)
 	{
@@ -130,7 +131,29 @@ void j1Map::Fill_tileset(pugi::xml_document& doc) {
 	}
 }
 	
+void j1Map::Fill_layers(pugi::xml_document& doc) {
 
+
+
+	for (pugi::xml_node layer = doc.child("map").child("layer"); layer; layer = layer.next_sibling("layer")) {
+
+		
+
+		
+		map_struct_layer.name = layer.attribute("name").as_string();
+		map_struct_layer.width = layer.attribute("width").as_uint();
+		map_struct_layer.height = layer.attribute("height").as_uint();
+		uint i = 0;
+		for (pugi::xml_node tiles = layer.child("data").child("tile"); tiles; tiles = tiles.next_sibling("tile")) {
+
+			map_struct_layer.gid[i] = tiles.attribute("gid").as_uint();
+			i++;
+		}
+		
+		
+
+	}
+}
 
 Orientation j1Map::String_to_orientation(p2SString str){
 

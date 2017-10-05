@@ -48,11 +48,20 @@ struct Map {
 	uint tilewidth;
 	uint tileheight;
 	int nextobjectid;
-	uint tileset_num=0;
-
-	
-	
+	uint tileset_num=0;	
 };
+
+struct Layer {
+	p2SString name;
+	uint width;
+	uint height;
+	uint* gid;
+
+
+
+
+};
+
 
 // ----------------------------------------------------
 class j1Map : public j1Module
@@ -84,6 +93,8 @@ private:
 
 	void Fill_tileset(pugi::xml_document& doc);
 
+	void Fill_layers(pugi::xml_document& doc);
+
 	void LOG_all(pugi::xml_document& doc);
 
 	Orientation String_to_orientation(p2SString str);
@@ -95,6 +106,7 @@ public:
 	// TODO 1: Add your struct for map info as public for now
 	Map map_struct;
 	Tileset map_struct_tileset;
+	Layer map_struct_layer;
 
 private:
 
