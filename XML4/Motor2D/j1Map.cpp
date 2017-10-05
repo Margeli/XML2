@@ -32,15 +32,9 @@ void j1Map::Draw()
 		return;
 
 	// TODO 5: Prepare the loop to draw all tilesets + Blit
-		
-	for (int x = 0; x < data.layers.At(0)->data->width; x++) {
-		for (int y = 0; y < data.layers.At(0)->data->height; y++) {
 
-
-			App->render->Blit(data.tilesets.At(0)->data->texture, x, y);
-		}
 		// TODO 9: Complete the draw function
-	}
+
 }
 
 
@@ -334,14 +328,8 @@ bool j1Map::LoadLayer(pugi::xml_node& node, Layer* layer){
 		layer->data[i++] = tile.attribute("gid").as_uint();
 		
 	}
-	return true;
+
 }
-
-uint Get1D(int x, int y) {
-
-	return 0;
-}
-
 
 Layer::~Layer(){
 	RELEASE(data);

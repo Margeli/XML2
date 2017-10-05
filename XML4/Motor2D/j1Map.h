@@ -16,7 +16,7 @@ struct Layer {
 	~Layer();
 };
 	// TODO 6: Short function to get the value of x,y
-uint Get1D(int x, int y);
+
 
 
 // ----------------------------------------------------
