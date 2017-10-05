@@ -32,7 +32,7 @@ void j1Map::Draw()
 		return;
 
 	// TODO 5: Prepare the loop to draw all tilesets + Blit
-		
+	
 	for (int x = 0; x < data.layers.At(0)->data->width; x++) {
 		for (int y = 0; y < data.layers.At(0)->data->height; y++) {
 
@@ -325,21 +325,24 @@ bool j1Map::LoadLayer(pugi::xml_node& node, Layer* layer){
 	layer->width = node.attribute("width").as_uint();
 
 	uint data_size = layer->width * layer->height;
-	layer->data=new uint[data_size];
+	layer->data= new uint[data_size];
 
-	memset(&data, 0, sizeof(uint)*data_size);
-	uint i= 0;
-	for (pugi::xml_node tile = node.child("data").child("tile"); tile; tile = tile.next_sibling("tile")) {
-		
-		layer->data[i++] = tile.attribute("gid").as_uint();
-		
+	memset(layer->data, 0, data_size*sizeof(uint));
+	
+	pugi::xml_node tile_node_iterator = node.child("data").child("tile");
+	for (int i = 0; i < data_size; i++) {
+		layer->data[i] = tile_node_iterator.attribute("gid").as_int();
+		tile_node_iterator = tile_node_iterator.next_sibling();
 	}
 	return true;
 }
 
 uint Get1D(int x, int y) {
+	
+	uint num = x * 1 + y * 8;
+		
 
-	return 0;
+	return num;
 }
 
 
