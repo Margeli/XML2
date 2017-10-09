@@ -32,13 +32,31 @@ void j1Map::Draw()
 		return;
 
 	// TODO 5: Prepare the loop to draw all tilesets + Blit
+	uint layer_index;
+	uint tile_index;
+	for (layer_index = 0; layer_index < data.layers.count(); layer_index++) {
+		for (int i = 0; i < data.width; i++) {
+			for (int j = 0; j < data.height; j++) {
+				uint id = data.layers[layer_index]->Get1D(i, j);//Return the id number
+				if (id != 0) {
+					for (tile_index = 0; tile_index < data.tilesets.count(); tile_index++) {
+
+						SDL_Rect tile_rect = data.tilesets[tile_index]->GetTileRect(id);
+						int x = MapToWorld(i, j).x;
+						int y = MapToWorld(i, j).y;
+
+						App->render->Blit(data.tilesets.At(0)->data->texture, x, y);
+					}
+				}
+
+				
+			}
+
+
+
+	}
 	
-	for (int x = 0; x < data.layers.At(0)->data->width; x++) {
-		for (int y = 0; y < data.layers.At(0)->data->height; y++) {
-
-
-			App->render->Blit(data.tilesets.At(0)->data->texture, x, y);
-		}
+	
 		// TODO 9: Complete the draw function
 	}
 }
@@ -337,12 +355,9 @@ bool j1Map::LoadLayer(pugi::xml_node& node, Layer* layer){
 	return true;
 }
 
-uint Get1D(int x, int y) {
-	
-	uint num = x * 1 + y * 8;
+inline uint Layer::Get1D(int x, int y) const{
 		
-
-	return num;
+	return x+y*width;
 }
 
 
