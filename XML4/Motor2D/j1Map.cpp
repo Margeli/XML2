@@ -32,33 +32,28 @@ void j1Map::Draw()
 		return;
 
 	// TODO 5: Prepare the loop to draw all tilesets + Blit
-	uint layer_index;
-	uint tile_index;
-	for (layer_index = 0; layer_index < data.layers.count(); layer_index++) {
-		for (int i = 0; i < data.width; i++) {
-			for (int j = 0; j < data.height; j++) {
-				uint id = data.layers[layer_index]->Get1D(i, j);//Return the id number
-				if (id != 0) {
-					for (tile_index = 0; tile_index < data.tilesets.count(); tile_index++) {
 
-						SDL_Rect tile_rect = data.tilesets[tile_index]->GetTileRect(id);
-						int x = MapToWorld(i, j).x;
-						int y = MapToWorld(i, j).y;
+	int tile_num=0;
+	for (p2List_item<Layer*> *layer_iterator = data.layers.At(0); layer_iterator != nullptr; layer_iterator = layer_iterator->next) {
 
-						App->render->Blit(data.tilesets.At(0)->data->texture, x, y);
-					}
-				}
+		for (int row = 0; row < layer_iterator->data->height; row++) {
+			for (int column = 0; column < layer_iterator->data->width; column++) {
 
+				uint id = layer_iterator->data->data[tile_num];
+				 
 				
+				iPoint position = GetXYfromTile(column, row);
+				
+				App->render->Blit(data.tilesets.At(0)->data->texture, position.x, position.y, &data.tilesets.At(0)->data->GetTileRect(id));
+				tile_num++;			
 			}
-
-
-
+		}	
 	}
+
+
+
+	// TODO 9: Complete the draw function
 	
-	
-		// TODO 9: Complete the draw function
-	}
 }
 
 
@@ -355,9 +350,14 @@ bool j1Map::LoadLayer(pugi::xml_node& node, Layer* layer){
 	return true;
 }
 
-inline uint Layer::Get1D(int x, int y) const{
-		
-	return x+y*width;
+inline iPoint GetXYfromTile(int x, int y) {
+	iPoint position;
+	position.x = x* App->map->data.tilesets.At(0)->data->tile_width;
+	position.y = y* App->map->data.tilesets.At(0)->data->tile_height;
+
+
+
+	return position;
 }
 
 

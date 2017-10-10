@@ -14,13 +14,14 @@ struct Layer {
 	uint height;
 	uint* data=nullptr;
 
-	inline uint Get1D(int x, int y) const;
+	
+
 
 	~Layer();
 };
 	// TODO 6: Short function to get the value of x,y
 
-
+inline iPoint GetXYfromTile(int x, int y) ;
 
 // ----------------------------------------------------
 struct TileSet
